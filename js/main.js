@@ -338,9 +338,8 @@ function renderTasks() {
 }
 
 // Set up event listeners
-let eventListenersSetup = false;
 function setupEventListeners() {
-  if (eventListenersSetup) return; // Prevent multiple calls
+  if (this.eventListenersSetup) return; // Prevent multiple calls
 
   document.querySelector('.navigation').addEventListener('click', handleNavigation);
   elements.sortSelect.addEventListener('change', handleSort);
@@ -352,9 +351,7 @@ function setupEventListeners() {
   elements.retryButton.addEventListener('click', init);
   elements.tasksList.addEventListener('click', handleTaskClick);
 
-  // Ensure the modal is initially closed
-  closeTaskModal();
-  eventListenersSetup = true;
+  this.eventListenersSetup = true;
 }
 
 // Show confirmation modal
@@ -382,11 +379,13 @@ function showConfirmationModal(message, onConfirm) {
 async function init() {
   try {
     showLoading();
-    // Initialize the app
+
     await initialize();
-    setupEventListeners();
     renderNavigation();
     renderTasks();
+    setupEventListeners(); // Call setupEventListeners after data is loaded
+    closeTaskModal(); // Ensure the modal is closed after setup
+
     hideLoading();
   } catch (error) {
     console.error('Failed to initialize app:', error);
