@@ -346,7 +346,11 @@ function setupEventListeners() {
   elements.deleteTaskButton.addEventListener('click', handleDeleteTask);
   elements.retryButton.addEventListener('click', init);
   elements.tasksList.addEventListener('click', handleTaskClick);
+
+  // Ensure the modal is initially closed
+  closeTaskModal();
 }
+
 // Show confirmation modal
 function showConfirmationModal(message, onConfirm) {
   const modal = document.createElement('div');
