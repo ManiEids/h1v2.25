@@ -346,11 +346,12 @@ function setupEventListeners() {
   elements.deleteTaskButton.addEventListener('click', handleDeleteTask);
   elements.retryButton.addEventListener('click', init);
   elements.tasksList.addEventListener('click', handleTaskClick);
-
-  // Ensure the modal is initially closed
+  elements.deleteTaskButton.addEventListener('click', handleDeleteTask);
+  // Ensure the modal is initially closedclick', init);
   closeTaskModal();
+  elements.tasksList.addEventListener('click', handleTaskClick);
 }
-
+// Ensure the modal is initially closed
 // Show confirmation modal
 function showConfirmationModal(message, onConfirm) {
   const modal = document.createElement('div');
@@ -363,32 +364,31 @@ function showConfirmationModal(message, onConfirm) {
     </div>
   `;
   document.body.appendChild(modal);
-
   document.getElementById('confirm-yes').addEventListener('click', () => {
     onConfirm();
     document.body.removeChild(modal);
   });
-
   document.getElementById('confirm-no').addEventListener('click', () => {
     document.body.removeChild(modal);
   });
 }
-
-// Initialize the app
+// Initialize the appoveChild(modal);
 async function init() {
   try {
     showLoading();
-
+    // Initialize the app
     await initialize();
     setupEventListeners();
     renderNavigation();
     renderTasks();
-
+    await initialize();
     hideLoading();
   } catch (error) {
     console.error('Failed to initialize app:', error);
     showError();
   }
+  // Initialize when DOM loaded
+  document.addEventListener('DOMContentLoaded', init);
 }
 
 // Initialize when DOM loaded
