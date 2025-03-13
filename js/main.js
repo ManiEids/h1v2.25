@@ -114,6 +114,7 @@ function populateCategoryDropdown() {
 
 // Close the task modal
 function closeTaskModal() {
+  // Hide the modal
   elements.taskModal.classList.add('hidden');
 }
 
@@ -146,6 +147,7 @@ function openTaskModal(taskId = null) {
     elements.deleteTaskButton.style.display = 'none';
   }
 
+  // Show the modal
   elements.taskModal.classList.remove('hidden');
 }
 
@@ -336,7 +338,10 @@ function renderTasks() {
 }
 
 // Set up event listeners
+let eventListenersSetup = false;
 function setupEventListeners() {
+  if (eventListenersSetup) return; // Prevent multiple calls
+
   document.querySelector('.navigation').addEventListener('click', handleNavigation);
   elements.sortSelect.addEventListener('change', handleSort);
   elements.addTaskButton.addEventListener('click', () => openTaskModal());
@@ -346,12 +351,12 @@ function setupEventListeners() {
   elements.deleteTaskButton.addEventListener('click', handleDeleteTask);
   elements.retryButton.addEventListener('click', init);
   elements.tasksList.addEventListener('click', handleTaskClick);
-  elements.deleteTaskButton.addEventListener('click', handleDeleteTask);
-  // Ensure the modal is initially closedclick', init);
+
+  // Ensure the modal is initially closed
   closeTaskModal();
-  elements.tasksList.addEventListener('click', handleTaskClick);
+  eventListenersSetup = true;
 }
-// Ensure the modal is initially closed
+
 // Show confirmation modal
 function showConfirmationModal(message, onConfirm) {
   const modal = document.createElement('div');
@@ -372,7 +377,8 @@ function showConfirmationModal(message, onConfirm) {
     document.body.removeChild(modal);
   });
 }
-// Initialize the appoveChild(modal);
+
+// Initialize the app
 async function init() {
   try {
     showLoading();
@@ -381,14 +387,11 @@ async function init() {
     setupEventListeners();
     renderNavigation();
     renderTasks();
-    await initialize();
     hideLoading();
   } catch (error) {
     console.error('Failed to initialize app:', error);
     showError();
   }
-  // Initialize when DOM loaded
-  document.addEventListener('DOMContentLoaded', init);
 }
 
 // Initialize when DOM loaded
