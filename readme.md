@@ -9,6 +9,7 @@ minnislistakerfi
 
 sami bakendi og í einstaklingsverkefnj 3 
 
+expire-ar af render 8 april
 
 hostað á render  bæði gagnagrunnur og síða.
 
